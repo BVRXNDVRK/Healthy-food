@@ -208,12 +208,19 @@ window.addEventListener('DOMContentLoaded', () => {
     return await res.json();
   };
 
-  getResource('http://localhost:3000/menu')
-  .then(data => {
-    data.forEach(({img, altImg, title, descr, price}) => {
-      new MenuCard(img, altImg, title, descr, price, '.menu .container').render();
+  // getResource('http://localhost:3000/menu')
+  // .then(data => {
+  //   data.forEach(({img, altImg, title, descr, price}) => {
+  //     new MenuCard(img, altImg, title, descr, price, '.menu .container').render();
+  //   });
+  // });
+  
+  axios.get('http://localhost:3000/menu')
+    .then(data => {
+      data.data.forEach(({img, altImg, title, descr, price}) => {
+        new MenuCard(img, altImg, title, descr, price, '.menu .container').render();
+      });
     });
-  });
 
 // ВТОРОЙ ВАРИАНТ getResourse();
   // getResource('http://localhost:3000/menu')
@@ -360,5 +367,163 @@ window.addEventListener('DOMContentLoaded', () => {
       closeModal();
     }, 4000);
   }
+
+  // SLIDER
+
+
+  // САМОСТОЯТЕЛЬНАЯ РАБОТА
+  // 1-Й СПОСОБ
+  // const prevBtn = document.querySelector('.offer__slider-prev'),
+  //       nextBtn = document.querySelector('.offer__slider-next'),
+  //       counterCurrent = document.querySelector('#current'),
+  //       counterTotal = document.querySelector('#total'),
+  //       slider = document.querySelector('.offer__slide'),
+  //       slides = [
+  //         {src: 'img/slider/food-12.jpg', alt: 'image: food'},
+  //         {src: 'img/slider/olive-oil.jpg', alt: 'image: oil'},
+  //         {src: 'img/slider/pepper.jpg', alt: 'image: pepper'},
+  //         {src: 'img/slider/paprika.jpg', alt: 'image: paprika'}
+  //       ];
+  // let slidesCount = 0,
+  //     currentSlide = 1;
+  
+  // function changeSlide(slideNumber) {
+  //   slider.innerHTML = `
+  //     <img src="${slides[slideNumber - 1].src}" alt="${slides[slideNumber - 1].alt}">
+  //   `;
+  //   const slideImg = document.querySelector('.offer__slide img');
+  //   let opa = 0;
+  //   slideImg.style.opacity = opa;
+
+  //   setInterval(() => {
+  //     if (opa != 1) {
+  //       opa = opa + 0.1;
+  //       slideImg.style.opacity = opa;
+  //     }
+  //   }, 24);
+  // }
+
+  // function changeSlideNumber() {
+  //   if ( currentSlide < 10 ) {
+  //     counterCurrent.textContent = `0${currentSlide}`;
+  //   } else {
+  //     counterCurrent.textContent = currentSlide;
+  //   }
+  // }
+  // changeSlideNumber();
+
+  // for (let slide of slides) {
+  //   slidesCount++;
+  // }
+
+  // if ( slidesCount < 10 ) {
+  //   counterTotal.textContent = `0${slidesCount}`;
+  // } else {
+  //   counterTotal.textContent = slidesCount;
+  // }
+
+  // slider.innerHTML = `
+  //   <img src="${slides[0].src}" alt="${slides[0].alt}">
+  // `;
+
+  // nextBtn.addEventListener('click', () => {
+  //   if (currentSlide < slidesCount) {
+  //     currentSlide++;
+  //     changeSlideNumber();
+  //     changeSlide(currentSlide);
+  //   }
+  // });
+
+  // prevBtn.addEventListener('click', () => {
+  //   if (currentSlide > 1) {
+  //     currentSlide--;
+  //     changeSlideNumber();
+  //     changeSlide(currentSlide);
+  //   }
+  // });
+  
+  // 2-Й СПОСОБ
+  // const prevBtn = document.querySelector('.offer__slider-prev'),
+  //       nextBtn = document.querySelector('.offer__slider-next'),
+  //       counterCurrent = document.querySelector('#current'),
+  //       counterTotal = document.querySelector('#total'),
+  //       slider = document.querySelector('.offer__slider-wrapper'),
+  //       slides = [
+  //         {src: 'img/slider/food-12.jpg', alt: 'image: food'},
+  //         {src: 'img/slider/olive-oil.jpg', alt: 'image: oil'},
+  //         {src: 'img/slider/pepper.jpg', alt: 'image: pepper'},
+  //         {src: 'img/slider/paprika.jpg', alt: 'image: paprika'}
+  //       ];
+  // let slidesCount = 0,
+  //     currentSlide = 1,
+  //     dist = 0;
+
+  // function changeSlideNumber() {
+  //   if ( currentSlide < 10 ) {
+  //     counterCurrent.textContent = `0${currentSlide}`;
+  //   } else {
+  //     counterCurrent.textContent = currentSlide;
+  //   }
+  // }
+  // changeSlideNumber();
+
+  // for (let slide of slides) {
+  //   slidesCount++;
+  // }
+
+  // if ( slidesCount < 10 ) {
+  //   counterTotal.textContent = `0${slidesCount}`;
+  // } else {
+  //   counterTotal.textContent = slidesCount;
+  // }
+
+  // slider.innerHTML = '';
+  // slider.style.cssText = `
+  //   display: flex;
+  //   overflow: hidden;
+  // `;
+  // for (let i = 0; i < slidesCount; i++) {
+  //   slider.innerHTML += `
+  //   <div class="offer__slide">
+  //     <img src="${slides[i].src}" alt="${slides[i].alt}">
+  //   </div>  
+  // `;
+  // }
+
+  // const allSlides = document.querySelectorAll(`.${slider.classList[0]} img`);
+  // allSlides.forEach(image => {
+  //   image.style.width = "650px";
+  // });
+
+  // nextBtn.addEventListener('click', () => {
+  //   if (currentSlide < slidesCount) {
+  //     currentSlide++;
+  //     changeSlideNumber();
+  //     dist += 650;
+  //     for (let i = 0; i < slidesCount; i++) {
+  //       allSlides[i].style.cssText = `
+  //       width: 650px;
+  //       transition: transform 0.3s linear;
+  //       transform: translateX(-${dist}px);
+  //     `;
+  //     }
+  //   }
+  // });
+
+  // prevBtn.addEventListener('click', () => {
+  //   if (currentSlide > 1) {
+  //     currentSlide--;
+  //     changeSlideNumber();
+  //     dist -= 650;
+  //     for (let i = 0; i < slidesCount; i++) {
+  //       allSlides[i].style.cssText = `
+  //       width: 650px;
+  //       transition: transform 0.3s linear;
+  //       transform: translateX(-${dist}px);
+  //     `;
+  //     }
+  //   }
+  // });
+
 });
 

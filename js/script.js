@@ -763,6 +763,78 @@ window.addEventListener('DOMContentLoaded', () => {
   //   dots[slideIndex - 1].style.opacity = 1;
   // });
   
+  // CALCULATOR
+  // САМОСТОЯТЕЛЬНАЯ РАБОТА
+
+  const resultField = document.querySelector('.calculating__result span'),
+        inputs = document.querySelectorAll('.calculating__choose input'),
+        genderBtns = document.querySelectorAll('[data-gender]'),
+        ratioBtns = document.querySelectorAll('[data-ratio]'),
+        calculator = document.querySelector('.calculating__field');
+
+  let result, gender, height, weight, age, ratio;
+
+  function calculateResult() {
+    if (gender == 'male') {
+    result = Math.round((88.36 + 13.4 * weight + 4.8 * height - 5.7 * age) * ratio);
+    } else if(gender == 'female') {
+    result = Math.round((447.6 + 9.2 * weight + 3.1 * height - 4.3 * age) * ratio); 
+    }
+
+    if (isNaN(result) || height == '' || weight == '' || age == '') {
+      resultField.textContent = `...  `;
+    } else {
+      resultField.textContent = result;
+    }
+  }
+
+  resultField.textContent = `...  `;
+
+  calculator.addEventListener('click', event => {
+    const t = event.target;
+
+    if (t.dataset.gender) {
+      genderBtns.forEach(btn => {
+        btn.classList.remove('calculating__choose-item_active');
+      });
+      t.classList.add('calculating__choose-item_active');
+
+      gender = t.id;
+
+      calculateResult();
+    } else if (t.dataset.ratio) {
+      ratioBtns.forEach(btn => {
+        btn.classList.remove('calculating__choose-item_active');
+      });
+      t.classList.add('calculating__choose-item_active');
+
+      ratio = t.dataset.ratio;
+
+      calculateResult();
+    }
+  });
+
+  inputs.forEach(inputField => {
+    inputField.addEventListener('input', () => {
+      switch(inputField.id) {
+        case (inputField.id = 'height'):
+          height = inputField.value;
+          calculateResult();
+          break;
+
+          case (inputField.id = 'weight'):
+          weight = inputField.value;
+          calculateResult();
+          break;
+
+          case (inputField.id = 'age'):
+          age = inputField.value;
+          calculateResult();
+          break;
+      }
+    }); 
+  });
+
 
 });
 
